@@ -23,7 +23,7 @@ cd "$APP_DIR"
 rm .gitmodules
 
 # create an empty repo to fetch into
-git init -q
+git init
 
 # enable sparse checkouts, this will avoid checking out
 # all the files in the repo, we'll only check out .gitmodules
@@ -50,11 +50,11 @@ if [[ ! -z $GIT_SSH_KEY ]]; then
 fi
 
 # checkout the revision that's being deployed
-git fetch -q --depth 1 origin -a > /dev/null
-git checkout -q ${SOURCE_VERSION:-master} > /dev/null
+git fetch --depth 1 origin -a > /dev/null
+git checkout ${SOURCE_VERSION:-master} > /dev/null
 echo "-----> Fetched shallow history from $GIT_REPO_URL"
 
 # initialize all the submodules
-git submodule -q update --init --recursive
+git submodule update --init --recursive
 echo "-----> Checked out all submodules"
 git submodule status | sed 's/^/       * /'
